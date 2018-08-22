@@ -67,12 +67,14 @@ def print_mimic(mimic_dict, word):
   """Given mimic dict and start word, prints 200 random words."""
   # +++your code here+++
   next = word
+  text = []
   for j in range(200):
       if next in mimic_dict:
           next = random.choice(mimic_dict[next])
-          print next
+          text.append(next)
       else:
           next = ''
+  print(' '.join(text))
   return
 
 
