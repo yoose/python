@@ -55,12 +55,31 @@ print the command's output. Test this by trying to write a zip file to a directo
 # +++your code here+++
 # Write functions and modify main() to call them
 def get_special_paths(paths):
+    special_paths = []
     for cur_path in paths:
         files = os.listdir(cur_path)
         for file in files:
             if re.search('__\w+__',file):
-                print(os.path.join(os.path.abspath(cur_path),file))
+                # this gives the absolute path
+                #print(os.path.join(os.path.abspath(cur_path),file))
+                special_paths.append(os.path.join(os.path.abspath(cur_path),file))
+    return special_paths
 
+def copy_to(paths, dir):
+    # check to see if the directory exists, if not, make it.
+    if not os.path.exists(dir):
+        os.mkdir(dir)
+    for files in paths:
+        # copy the files
+        shutil.copy(files, dir)
+    return
+
+def zip_to(paths, zipfilepath):
+    filelist = ' '.join(paths)
+    cmd = 'zip -j %s %s' % (zipfilepath, filelist)
+    print(cmd)
+    os.system(cmd)
+    return
 
 
 def main():
@@ -93,7 +112,13 @@ def main():
 
   # +++your code here+++
   # Call your functions
-  get_special_paths(args)
+  special_paths = get_special_paths(args)
+  if todir:
+    copy_to(special_paths, todir)
+  if tozip:
+    zip_to(special_paths,tozip)
+  if not tozip and not todir:
+    print(special_paths)
 
 
 if __name__ == "__main__":
