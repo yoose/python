@@ -56,13 +56,12 @@ print the command's output. Test this by trying to write a zip file to a directo
 # Write functions and modify main() to call them
 def get_special_paths(paths):
     special_paths = []
-    for cur_path in paths:
-        files = os.listdir(cur_path)
-        for file in files:
-            if re.search('__\w+__',file):
-                # this gives the absolute path
-                #print(os.path.join(os.path.abspath(cur_path),file))
-                special_paths.append(os.path.join(os.path.abspath(cur_path),file))
+    files = os.listdir(paths)
+    for file in files:
+        if re.search('__\w+__',file):
+            # this gives the absolute path
+            #print(os.path.join(os.path.abspath(cur_path),file))
+            special_paths.append(os.path.join(os.path.abspath(cur_path),file))
     return special_paths
 
 def copy_to(paths, dir):
